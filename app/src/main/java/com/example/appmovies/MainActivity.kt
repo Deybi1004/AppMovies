@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
     @Inject
     lateinit var repository : MovieRepository
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
                     LaunchedEffect(true) {
                         val movies = repository.getUpcomingMovies()
-                        println()
+                        println(movies)
                     }
                 }
             }

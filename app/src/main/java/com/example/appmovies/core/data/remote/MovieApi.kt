@@ -7,6 +7,6 @@ interface MovieApi {
     companion object{
         const val BASE_URL ="https://api.themoviedb.org/3/"
     }
-    @GET("/movie/upcoming") // TODO: Pagination
+    @GET("movie/upcoming") // TODO: Pagination
     suspend fun getUpcomingMovies() : MovieDtoResponse
 }
