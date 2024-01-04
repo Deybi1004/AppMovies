@@ -8,6 +8,10 @@ interface MovieApi {
         const val IMAGE_URL = "https://image.tmdb.org/t/p/original/"
         const val BASE_URL ="https://api.themoviedb.org/3/"
     }
-    @GET("movie/upcoming") // TODO: Pagination
+    // TODO: Pagination
+    @GET("movie/upcoming")
     suspend fun getUpcomingMovies() : MovieDtoResponse
+
+    @GET("movie/popular")
+    suspend fun getPopularMovies() : MovieDtoResponse
 }

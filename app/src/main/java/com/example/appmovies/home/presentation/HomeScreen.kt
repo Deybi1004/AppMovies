@@ -2,6 +2,7 @@ package com.example.appmovies.home.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,10 +18,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.appmovies.R
+import com.example.appmovies.home.presentation.components.HomeHeader
 import com.example.appmovies.home.presentation.components.HomeMovieList
 
 
@@ -36,23 +39,24 @@ fun HomeScreen(
             .padding(start = 25.dp)
     ) {
         item {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(90.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.logo_marca),
-                    contentDescription = "eMovies",
-                    modifier = Modifier.padding(vertical = 30.dp)
-                )
+            HomeHeader()
+        }
+        if (state.upcomingMovies.isNotEmpty()) {
+            item {
+                HomeMovieList(
+                    stringResource(R.string.upcoming_releases),
+                    posters = state.upcomingMovies.map { it.poster })
             }
         }
-        if (state.upcoming.isNotEmpty()) {
+        item {
+            Spacer(modifier = Modifier.height(26.dp))
+        }
+
+        if (state.popularMovies.isNotEmpty()) {
             item {
-                HomeMovieList("Próximos Estrenos",
-                    posters = state.upcoming.map { it.poster })
+                HomeMovieList(
+                    stringResource(R.string.popular_movies),
+                    posters = state.popularMovies.map { it.poster })
             }
         }
     }
