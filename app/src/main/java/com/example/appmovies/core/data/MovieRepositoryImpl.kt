@@ -1,14 +1,21 @@
 package com.example.appmovies.core.data
 
+import android.util.Log
 import com.example.appmovies.core.data.mapper.toDomain
 import com.example.appmovies.core.data.remote.MovieApi
 import com.example.appmovies.core.domain.model.Movie
 import com.example.appmovies.core.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
-    val api: MovieApi
+    private val api: MovieApi
 ) : MovieRepository {
-    override suspend fun getUpcomingMovies(): List<Movie> {
-        return api.getUpcomingMovies().movieResults.map { it.toDomain() }
+    override suspend fun getUpcomingMovies(): Result<List<Movie>> {
+
+        return try {
+            val results = api.getUpcomingMovies().movieResults
+            Result.success(results.map { it.toDomain() })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

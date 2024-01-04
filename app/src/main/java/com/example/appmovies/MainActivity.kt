@@ -10,9 +10,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.appmovies.core.domain.repository.MovieRepository
+import com.example.appmovies.home.presentation.HomeScreen
+import com.example.appmovies.ui.theme.Background
 import com.example.appmovies.ui.theme.MovieDbTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -21,9 +27,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity() : AppCompatActivity() {
 
-    @Inject
-    lateinit var repository : MovieRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,29 +34,18 @@ class MainActivity() : AppCompatActivity() {
             MovieDbTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = Color.Black
                 ){
-                    Greeting()
-
-                    LaunchedEffect(true) {
-                        val movies = repository.getUpcomingMovies()
-                        println(movies)
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "HOME" ){
+                        composable("HOME"){
+                            HomeScreen()
+                        }
                     }
+
+
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(){
-    Text(text = "Hello Android")
-}
-
- @Preview(showBackground = true)
-@Composable
-fun DefaultPreview(){
-    MovieDbTheme {
-        Greeting()
     }
 }
